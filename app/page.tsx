@@ -1,5 +1,10 @@
 import Link from 'next/link';
 import { getEntries } from '@/lib/contentstack';
+import RefreshButton from './components/RefreshButton';
+
+// Force dynamic rendering - disable all caching
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 // Default content type - you can change this to match your Contentstack content type
 const CONTENT_TYPE = process.env.NEXT_PUBLIC_CONTENTSTACK_CONTENT_TYPE || 'entry';
@@ -29,14 +34,22 @@ export default async function Home() {
       <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="mb-8 text-center">
-          <h1 className="mb-4 text-5xl font-bold text-slate-900 dark:text-white sm:text-6xl">
-            Sanity Dashboard
-          </h1>
+          <div className="mb-4 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <h1 className="text-5xl font-bold text-slate-900 dark:text-white sm:text-6xl">
+              Sanity Dashboard
+            </h1>
+            <RefreshButton />
+          </div>
           <p className="text-xl text-slate-600 dark:text-slate-300">
             Content powered by Contentstack
           </p>
-          <div className="mt-4 text-sm text-slate-500 dark:text-slate-400">
-            Showing {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
+          <div className="mt-4 flex flex-col items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+            <div>
+              Showing {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
+            </div>
+            <div className="text-xs">
+              Last updated: {new Date().toLocaleString()}
+            </div>
           </div>
         </header>
 

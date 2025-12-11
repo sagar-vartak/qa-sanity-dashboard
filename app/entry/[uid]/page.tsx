@@ -2,6 +2,10 @@ import Link from 'next/link';
 import { getEntry } from '@/lib/contentstack';
 import { notFound } from 'next/navigation';
 
+// Force dynamic rendering - disable all caching
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Default content type - you can change this to match your Contentstack content type
 const CONTENT_TYPE = process.env.NEXT_PUBLIC_CONTENTSTACK_CONTENT_TYPE || 'entry';
 
