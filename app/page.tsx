@@ -155,7 +155,14 @@ export default async function Home() {
                     const total = entry.total ?? 'N/A';
                     const passed = entry.passed ?? 'N/A';
                     const failed = entry.failed ?? 'N/A';
-                    const htmlReportUrl = entry.html_report?.[0]?.url || entry.html_report?.[0] || null;
+                    // Extract HTML report URL - handle both object with url property and direct string
+                    const htmlReportFirstItem = entry.html_report?.[0];
+                    const htmlReportUrl = 
+                      (typeof htmlReportFirstItem === 'object' && htmlReportFirstItem?.url) 
+                        ? htmlReportFirstItem.url 
+                        : (typeof htmlReportFirstItem === 'string' 
+                            ? htmlReportFirstItem 
+                            : null);
 
                     return (
                       <tr
