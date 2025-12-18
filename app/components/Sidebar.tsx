@@ -2,6 +2,11 @@
 
 import { useState } from 'react';
 
+interface UserInfo {
+  username: string;
+  email: string;
+}
+
 interface SidebarProps {
   environments: string[];
   modules: string[];
@@ -11,6 +16,7 @@ interface SidebarProps {
   onModuleChange: (module: string | null) => void;
   entryCount: number;
   filteredCount: number;
+  userInfo: UserInfo | null;
 }
 
 export default function Sidebar({
@@ -22,6 +28,7 @@ export default function Sidebar({
   onModuleChange,
   entryCount,
   filteredCount,
+  userInfo,
 }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -72,6 +79,32 @@ export default function Sidebar({
         }`}
       >
         <div className="flex h-full flex-col overflow-y-auto p-6">
+          {/* User Info Section */}
+          {userInfo && (
+            <div className="mb-3 pb-6 border-b border-slate-200 dark:border-slate-700">
+              <div className="flex items-center gap-4">
+                {/* Avatar */}
+                <div className="flex-shrink-0">
+                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-md">
+                    <span className="text-2xl font-bold text-white">
+                      {userInfo.username.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+                
+                {/* User Details */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-bold text-slate-700 dark:text-white uppercase truncate">
+                    {userInfo.username}
+                  </h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 truncate mt-1">
+                    {userInfo.email}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Sidebar Header */}
           <div className="mb-6 border-b border-slate-200 pb-4 dark:border-slate-700">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white">
